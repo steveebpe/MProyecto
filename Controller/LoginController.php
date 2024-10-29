@@ -1,5 +1,5 @@
 <?php
-    include_once $_SERVER["DOCUMENT_ROOT"] . '/Model/LoginModel.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . '/Clase/Model/LoginModel.php';
 
     if(session_status() == PHP_SESSION_NONE) {
         session_start();
