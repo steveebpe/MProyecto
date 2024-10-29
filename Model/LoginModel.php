@@ -1,26 +1,35 @@
 <?php
-    include_once 'BaseDatos.php';
+    include_once $_SERVER["DOCUMENT_ROOT"] . '/Model/BaseDatos.php';
 
     function IniciarSesionModel($correo, $contrasenna)
     {
-        $enlace = AbrirBD();
+        try
+        {
+            $enlace = AbrirBD();
 
-        //Ejecutar el procedimiento almacenado
+            $sentencia = "CALL IniciarSesion('$correo','$contrasenna')";
+            $resultado = $enlace -> query($sentencia);
 
-        CerrarBD($enlace);
+            CerrarBD($enlace);
+            return $resultado;
+        }
+        catch(Exception $ex)
+        {
+            return null;
+        }
     }
 
     function RegistrarUsuarioModel($identificacion,$nombre,$correo,$contrasenna)
     {
         try
         {
-        $enlace = AbrirBD();
+            $enlace = AbrirBD();
 
-        $sentencia = "CALL RegistrarUsuario('$identificacion','$nombre','$correo','$contrasenna')";
-        $result = $enlace -> query($sentencia);
+            $sentencia = "CALL RegistrarUsuario('$identificacion','$nombre','$correo','$contrasenna')";
+            $resultado = $enlace -> query($sentencia);
 
-        CerrarBD($enlace);
-        return $resultado;
+            CerrarBD($enlace);
+            return $resultado;
         }
         catch(Exception $ex)
         {
@@ -30,11 +39,38 @@
 
     function RecuperarAccesoModel($correo)
     {
-        $enlace = AbrirBD();
+        try
+        {
+            $enlace = AbrirBD();
 
-        //Ejecutar el procedimiento almacenado
+            $sentencia = "CALL RecuperarAcceso('$correo')";
+            $resultado = $enlace -> query($sentencia);
 
-        CerrarBD($enlace);
+            CerrarBD($enlace);
+            return $resultado;
+        }
+        catch(Exception $ex)
+        {
+            return null;
+        }
+    }
+
+    function ActualizarContrasennaModel($Consecutivo, $Codigo)
+    {
+        try
+        {
+            $enlace = AbrirBD();
+
+            $sentencia = "CALL ActualizarContrasenna('$Consecutivo','$Codigo')";
+            $resultado = $enlace -> query($sentencia);
+
+            CerrarBD($enlace);
+            return $resultado;
+        }
+        catch(Exception $ex)
+        {
+            return false;
+        }
     }
 
 ?>
